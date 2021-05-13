@@ -31,7 +31,16 @@ class Hasher:
 
         hash_value = hashlib.sha512((payment_hash_sequence).encode('utf-8')).hexdigest().lower()
         return hash_value
+'''Response received from Payment Gateway at this page.
+It is absolutely mandatory that the hash (or checksum) is computed again after you receive response from PayU and compare it with request and post back parameters. This will protect you from any tampering by the user and help in ensuring a safe and secure transaction experience. It is mandate that you secure your integration with PayU by implementing Verify webservice and Webhook/callback as a secondary confirmation of transaction response.
 
+Hash string without Additional Charges -
+hash = sha512(SALT|status||||||udf5|||||email|firstname|productinfo|amount|txnid|key)
+
+With additional charges - 
+hash = sha512(additionalCharges|SALT|status||||||udf5|||||email|firstname|productinfo|amount|txnid|key)
+   ''' 
+    
     def validate_hash(params):
         client_creds = base.get_params()
         key = client_creds[0]
